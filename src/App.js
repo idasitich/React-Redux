@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import { connect } from 'react-redux';
+import Allorder from './allorder';
 
-function App() {
+
+function App(props) {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <>
+    <Allorder/>
+     <div className="App">
+    <button onClick={props.handleMinus}>-</button>
+     <span>{props.order}</span>
+    <button onClick={props.handlePlus}>+</button>
     </div>
+    </>
+   
   );
 }
+const mapStateToProps=(state)=>{
+return {
+  order : state.totalOrder
+}
+}
+const mapDispatchToProps =(dispatch)=>{
+  return{
+    handlePlus : ()=>{dispatch({type: 'PLUS_ORDER'})},
+    handleMinus : ()=>{dispatch({type: 'MINUS_ORDER'})}
+  }
+}
 
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);
